@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форматы — Лесное Озеро</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('img/общ план круг.jpg') center/cover no-repeat fixed;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { text-align: center; }
+        .logo span { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; display: block; color: #777; }
+        .logo b { font-size: 16px; color: #267646; text-transform: uppercase; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #267646; }
+        .nav-links .btn-call {
+            background: #267646;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-left: 30px;
+        }
+
+        /* Заголовок страницы */
+        .page-header {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+        .page-header p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        /* Блоки форматов */
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .format-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #333;
+        }
+
+        .format-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Место для фото */
+        .format-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #267646;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .format-image::before {
+            content: '📷';
+            font-size: 48px;
+            opacity: 0.3;
+            margin-bottom: 10px;
+        }
+
+        .format-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .format-content {
+            padding: 30px;
+        }
+
+        .format-number {
+            display: inline-block;
+            background: #267646;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .format-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #267646;
+            margin-bottom: 15px;
+        }
+
+        .format-subtitle {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .format-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .format-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .format-list li {
+            padding: 6px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .format-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #267646;
+            font-weight: bold;
+        }
+
+        .format-for {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .format-for strong {
+            color: #267646;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Секция "Один посёлок" */
+        .summary-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 50px 40px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .summary-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #267646;
+            margin-bottom: 20px;
+        }
+
+        /* Итоговая секция */
+.summary-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 50px 40px;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 800px;
+    margin: 60px auto 0; /* Центрируем и добавляем отступ сверху */
+}
+
+/* Кнопка назад */
+.back-btn {
+    text-align: center;
+    margin: 40px auto 0; /* Центрируем кнопку */
+    display: block;
+    width: fit-content;
+}
+
+.back-btn a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(6px);
+    padding: 14px 28px;
+    border-radius: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.4);
+    font-size: 15px;
+}
+
+.back-btn a:hover {
+    background: rgba(38,118,70,0.9);
+    transform: translateX(-5px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .summary-section {
+        padding: 35px 25px;
+        margin: 40px 20px 0;
+    }
+    
+    .back-btn {
+        margin: 30px auto 0;
+    }
+}
+        .back-btn a:hover {
+            background: rgba(38,118,70,0.9);
+            transform: translateX(-5px);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 32px; }
+            .page-header p { font-size: 16px; }
+            .formats-grid { grid-template-columns: 1fr; }
+            .format-card { margin-bottom: 20px; }
+            .summary-section { padding: 35px 25px; }
+            .summary-section h2 { font-size: 24px; }
+        }
+        .header-intro {
+    font-size: 14px; /* Мельче основного текста */
+    max-width: 750px;
+    margin: 12px auto 0;
+    color: #d4d4d4;
+    line-height: 1.5;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+/* Обёртка для итоговой секции */
+.footer-section-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 80px;
+    width: 100%;
+}
+
+.summary-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 50px 40px;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 800px;
+    width: 90%;
+    margin-bottom: 30px; /* Отступ до кнопки */
+}
+
+.back-btn {
+    text-align: center;
+}
+
+.back-btn a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(6px);
+    padding: 14px 28px;
+    border-radius: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+.back-btn a:hover {
+    background: rgba(38,118,70,0.9);
+    transform: translateY(-2px);
+}
+/* === 4-Й БЛОК: ИНВЕСТИЦИИ (горизонтальная белая карточка) === */
+.format-card.horizontal-card {
+    display: flex !important;
+    flex-direction: row !important;
+    background: #ffffff !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    width: 95% !important;
+    max-width: 1000px;
+    margin: 40px auto !important; /* Центрируем блок */
+    min-height: 420px;
+    position: relative;
+}
+
+.format-card.horizontal-card .format-image {
+    width: 48% !important;
+    height: 420px !important;
+    flex-shrink: 0;
+    background: #e8f5e9;
+}
+
+.format-card.horizontal-card .format-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.format-card.horizontal-card .format-content {
+    width: 52% !important;
+    padding: 45px 40px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff !important;
+    color: #333333;
+}
+
+/* На мобильных */
+@media (max-width: 768px) {
+    .format-card.horizontal-card {
+        flex-direction: column !important;
+        width: 96% !important;
+        min-height: auto;
+    }
+    .format-card.horizontal-card .format-image {
+        width: 100% !important;
+        height: 250px !important;
+    }
+    .format-card.horizontal-card .format-content {
+        width: 100% !important;
+        padding: 30px 25px !important;
+    }
+}
+/* === 4-Й БЛОК: ИНВЕСТИЦИИ (Длинный горизонтальный) === */
+.format-card.horizontal-card {
+    /* ЭТА СТРОЧКА ДЕЛАЕТ ЕГО ДЛИННЫМ: */
+    grid-column: 1 / -1 !important; /* Растягиваем на всю ширину сетки */
+    
+    display: flex !important;
+    flex-direction: row !important; /* Фото слева, текст справа */
+    background: #ffffff !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    min-height: 200px; /* Фиксируем высоту, чтобы он не был слишком высоким */
+    width: 100%;
+    margin: 10px 0 40px;
+}
+
+.format-card.horizontal-card .format-image {
+    width: 45% !important;
+    height: 670px !important; /* Высота фото равна высоте блока */
+    flex-shrink: 0;
+}
+
+.format-card.horizontal-card .format-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Фото обрезается под размер, не сжимается */
+    display: block;
+}
+
+.format-card.horizontal-card .format-content {
+    width: 55% !important;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Текст по центру вертикали */
+}
+
+/* На мобильных снова вертикально */
+@media (max-width: 768px) {
+    .format-card.horizontal-card {
+        grid-column: auto !important; /* Отменяем растягивание на телефоне */
+        flex-direction: column !important;
+        min-height: auto;
+    }
+    .format-card.horizontal-card .format-image,
+    .format-card.horizontal-card .format-content {
+        width: 100% !important;
+    }
+    .format-card.horizontal-card .format-image { height: 250px !important; }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header>
+        <div class="logo">
+            <span>ЖИЛОЙ КОМПЛЕКС</span>
+            <b>ЛЕСНОЕ ОЗЕРО</b>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Главная</a>
+            
+            <a href="tel:+79674424604" class="btn-call">+7 (967) 442-46-04</a>
+        </div>
+    </header>
+
+    <!-- Заголовок -->
+    <div class="page-header">
+        <h1>Выберите свой формат жизни</h1>
+        <p>или инвестиций в «Лесном озере»</p>
+        <p class="header-intro">У нас можно выбрать не только земельный участок, но и готовый сценарий под вашу задачу: для жизни, отдыха, строительства дома, бани или инвестиций.</p>
+    </div>
+
+    <div class="container">
+        <!-- Сетка форматов -->
+        <div class="formats-grid">
+
+            <!-- Блок 1 -->
+            <div class="format-card">
+                <div class="format-image">
+    <img src="img/1.jpg" alt="Участок + коммуникации">
+</div>
+                <div class="format-content">
+                    <div class="format-number">1</div>
+                    <h3 class="format-title">Участок + коммуникации</h3>
+                    <p class="format-subtitle">Подходит тем, кто хочет купить землю и строиться самостоятельно.</p>
+                    
+                    <p class="format-text"><strong>В формат входит:</strong></p>
+                    <ul class="format-list">
+                        <li>земельный участок в посёлке</li>
+                        <li>электричество</li>
+                        <li>возможность подключения газа</li>
+                        <li>подъездные дороги</li>
+                        <li>сопровождение по границам участка, документам и условиям подключения</li>
+                        <li>понятные правила посёлка и обслуживания территории</li>
+                    </ul>
+
+                    <div class="format-for">
+                        <strong>Для кого:</strong>
+                        для тех, кто хочет сам выбрать проект дома, подрядчика и темп строительства.
+                    </div>
+                </div>
+            </div>
+
+           <!-- БЛОК 2: Участок + дом -->
+<div class="format-card">
+    <!-- Верхняя часть: Фото -->
+    <div class="format-image">
+        <img src="img/2.jpg" alt="Дом"> <!-- Твоё фото -->
+    </div>
+
+    <!-- Нижняя часть: Белый фон с текстом -->
+    <div class="format-content">
+        <div class="format-number">2</div>
+        <h3 class="format-title">Участок + дом</h3>
+        <p class="format-subtitle">Формат для тех, кто хочет быстрее перейти от покупки земли к готовому загородному дому.</p>
+        
+        <p class="format-text">Можно подобрать участок и вариант дома под задачу:</p>
+        <ul class="format-list">
+            <li>для постоянного проживания</li>
+            <li>для дачи выходного дня</li>
+            <li>для семейного отдыха</li>
+            <li>для аренды</li>
+        </ul>
+
+        <p class="format-text">Мы можем помочь с подбором участка, концепцией дома, размещением на участке и подбором подрядчика.</p>
+
+        <div class="format-for">
+            <strong>Для кого:</strong>
+            для тех, кто хочет не просто землю, а понятный путь к готовому дому.
+        </div>
+    </div>
+</div>
+            <!-- БЛОК 3: Участок + баня -->
+<div class="format-card">
+    <div class="format-image">
+        <img src="img/3.jpg" alt="Баня"> <!-- Замени путь к фото -->
+    </div>
+    <div class="format-content">
+        <div class="format-number">3</div>
+        <h3 class="format-title">Участок + баня</h3>
+        <p class="format-subtitle">Формат для быстрого запуска отдыха на своей земле.</p>
+        
+        <p class="format-text">Можно начать с бани, террасы, купели или небольшого модульного строения, а дом построить позже.</p>
+        <p class="format-text">Это хороший вариант, если хочется уже сейчас пользоваться участком: приезжать на выходные, отдыхать, встречаться с семьёй и друзьями.</p>
+
+        <div class="format-for">
+            <strong>Для кого:</strong>
+            для тех, кто хочет быстро получить живой загородный сценарий без ожидания большого строительства.
+        </div>
+    </div>
+</div>
+
+            <!-- Блок 4 -->
+           
+
+<!-- БЛОК 4: Инвестиции -->
+<div class="format-card horizontal-card">
+    <div class="format-image">
+        <img src="img/4.jpg" alt="Инвестиции">
+    </div>
+    <div class="format-content">
+        <div class="format-number">4</div>
+        <h3 class="format-title">Инвестиции</h3>
+        <p class="format-subtitle">«Лесное озеро» можно рассматривать как земельный актив с потенциалом роста стоимости.</p>
+        
+        <p class="format-text"><strong>Возможные стратегии:</strong></p>
+        <ul class="format-list">
+            <li>покупка участка на раннем этапе развития посёлка</li>
+            <li>перепродажа после роста инфраструктуры</li>
+            <li>строительство дома под продажу</li>
+            <li>запуск дома или бани под аренду</li>
+            <li>участие в развитии отдельных проектов внутри посёлка</li>
+        </ul>
+
+        <div class="format-for">
+            <strong>Для кого:</strong>
+            для инвесторов, которые понимают ценность земли, инфраструктуры и локации рядом с природой.
+        </div>
+    </div>
+</div>
+        
+        <!-- КОНЕЦ КАРТОЧЕК -->
+
+    </div> <!-- Закрывается .container -->
+
+    <!-- Итоговая секция и кнопка (ВНЕ container) -->
+    <div class="footer-section-wrapper">
+        <div class="summary-section">
+            <h2>Один посёлок — несколько сценариев</h2>
+            <p>Вы можете начать с простого участка, построить дом, поставить баню или рассмотреть объект как инвестицию. Мы поможем подобрать формат под вашу цель, бюджет и сроки.</p>
+        </div>
+
+        <div class="back-btn">
+            <a href="index.html">← Вернуться на главную</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
+</body>
+</html>

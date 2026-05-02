@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лесное Озеро — Земельные участки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/лесное\ озеро.jpg') center/cover no-repeat;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            z-index: 10;
+        }
+
+        .header-left a {
+            color: #fff;
+            text-decoration: underline;
+            font-size: 13px;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .header-left a:hover {
+            opacity: 1;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 13px;
+            letter-spacing: 2px;
+            line-height: 1.4;
+        }
+
+        .logo-text .small {
+            font-size: 9px;
+            display: block;
+            font-weight: 300;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .phone {
+            font-size: 15px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .phone:hover {
+            opacity: 0.8;
+        }
+        .burger {
+            width: 36px;
+            height: 36px;
+            background: rgba(45, 130, 76, 0.85);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .burger:hover {
+            background: rgba(45, 130, 76, 1);
+        }
+
+        .burger span {
+            width: 18px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .main {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .content {
+            max-width: 600px;
+        }
+
+        h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: 3px;
+    text-transform: none;  /* ← ЗАМЕНИЛ ЗДЕСЬ (было uppercase) */
+    margin-bottom: 30px;
+}
+        .subtitle {
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .price {
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+            opacity: 0.85;
+        }
+
+        .btn-details {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 36px;
+            background: rgba(38, 118, 70, 0.92);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            text-decoration: none;
+        }
+
+        .btn-details:hover {
+            background: rgba(32, 100, 60, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-nav {
+            position: absolute;
+            right: 50px;
+            bottom: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slide-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slide-dot.active {
+            background: #fff;
+            transform: scale(1.5);
+        }
+        .bottom-arrows {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+        }
+
+        .arrow-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 200, 80, 0.85);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #2a2a2a;
+            transition: all 0.3s;
+        }
+
+        .arrow-btn:hover {
+            background: rgba(255, 220, 100, 1);
+            transform: scale(1.1);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 48px;
+            min-width: 340px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            color: #2a2a2a;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .modal-phone {
+            font-size: 18px;
+            font-weight: 500;
+            color: #267646;
+            margin-bottom: 28px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .modal-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .modal-btn.call {
+            background: #267646;
+            color: #fff;
+        }
+
+        .modal-btn.call:hover {
+            background: #1e5f38;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(38, 118, 70, 0.35);
+        }
+
+        .modal-btn.sms {
+            background: #f0f7f2;
+            color: #267646;
+            border: 1.5px solid rgba(38, 118, 70, 0.3);
+        }
+
+        .modal-btn.sms:hover {
+            background: #e0f0e5;
+            transform: translateY(-2px);
+        }
+
+       .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Сначала фото, потом затемнение */
+    background: url('img/общ план круг.jpg') center/cover no-repeat;
+    z-index: 200;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    /* Эффект стекла */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Добавляем псевдоэлемент для затемнения */
+.menu-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Затемнение 50% */
+    z-index: -1;
+}
+
+.menu-overlay.active {
+    display: flex;
+}
+
+        .menu-overlay.active {
+            display: flex;
+        }
+
+        .menu-overlay a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .menu-overlay a:hover {
+            opacity: 0.6;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+        }
+        
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .logo-text .small {
+                font-size: 8px;
+            }
+
+            .phone {
+                display: none;
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .main {
+                padding: 100px 20px 60px;
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .subtitle,
+            .price {
+                font-size: 11px;
+                margin-bottom: 5px;
+            }
+
+            .btn-details {
+                padding: 10px 24px;
+                margin-top: 10px;
+            }
+
+            .bottom-arrows {
+                display: none;
+            }
+        }
+        .exc-input {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+}
+.exc-input:focus {
+    border-color: #267646;
+}
+/* Стили для галереи */
+.gallery-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.gallery-overlay.active {
+    display: flex;
+}
+
+.gallery-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.gallery-image-wrapper {
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.gallery-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 36px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.gallery-close:hover {
+    opacity: 0.7;
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-nav:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.gallery-prev {
+    left: -60px;
+}
+
+.gallery-next {
+    right: -60px;
+}
+
+.gallery-counter {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin-top: 15px;
+    letter-spacing: 2px;
+}
+
+.gallery-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: rgba(38, 118, 70, 0.9);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.gallery-back-btn:hover {
+    background: rgba(32, 100, 60, 1);
+    transform: translateY(-2px);
+}
+
+.gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; /* Чуть меньше */
+    text-transform: none; /* Отключает принудительные заглавные буквы */
+    color: #fff;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.75);
+    margin-bottom: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.gallery-dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+/* Адаптивность галереи */
+@media (max-width: 768px) {
+    .gallery-image-wrapper {
+        height: 50vh;
+    }
+    
+    .gallery-prev {
+        left: 10px;
+    }
+    
+    .gallery-next {
+        right: 10px;
+    }
+    
+    .gallery-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .gallery-close {
+        top: -40px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-image-wrapper {
+        height: 40vh;
+    }
+    
+    .gallery-back-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}
+.success-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* Фоновое изображение природы */
+    background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    z-index: 400;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.success-overlay.active { display: flex; }
+
+/* Затемняющий слой поверх фото */
+.success-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 40, 20, 0.65); /* Зеленоватое затемнение для гармонии */
+}
+
+.success-content {
+    position: relative;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 35px 30px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    animation: popIn 0.4s ease;
+    color: #2a2a2a;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.success-close {
+    position: absolute;
+    top: 12px; right: 15px;
+    background: none; border: none;
+    font-size: 26px; cursor: pointer;
+    color: #888; transition: 0.3s;
+}
+.success-close:hover { color: #333; transform: rotate(90deg); }
+
+.success-icon { font-size: 42px; margin-bottom: 10px; }
+.success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; margin-bottom: 8px; color: #267646;
+}
+.success-text {
+    font-size: 15px; line-height: 1.5; margin-bottom: 22px; color: #444;
+}
+.success-btn {
+    padding: 12px 28px;
+    background: #267646; color: #fff;
+    border: none; border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: 0.3s;
+}
+.success-btn:hover { background: #1e5f38; transform: translateY(-2px); }
+
+.video-circle-overlay {
+    position: absolute;
+    right: 100px;    /* СЛЕВА, где цифры */
+    bottom: 180px; /* Подними выше к цифрам */
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.45);
+    cursor: pointer;
+    z-index: 50;
+    background: rgba(38,118,70,0.65);
+    transition: all 0.3s ease;
+}
+/* Скрыть кружок на мобильных */
+@media (max-width: 768px) {
+    .video-circle-overlay {
+        display: none !important;
+    }
+}
+/* === ПОДВАЛ САЙТА === */
+.site-footer {
+    background: linear-gradient(135deg, #1a4d2e 0%, #0f2e1f 100%);
+    color: #fff;
+    padding: 60px 20px 30px;
+    margin-top: 80px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section {
+    padding: 0 10px;
+}
+
+.footer-logo {
+    margin-bottom: 15px;
+}
+.footer-logo span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    color: rgba(255,255,255,0.7);
+}
+.footer-logo b {
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.footer-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-phone,
+.footer-email {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.footer-phone:hover,
+.footer-email:hover {
+    color: #90EE90;
+}
+
+.footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #fff;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    padding-bottom: 10px;
+}
+
+.footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-menu li {
+    margin-bottom: 10px;
+}
+
+.footer-menu a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.footer-menu a:hover {
+    color: #90EE90;
+    padding-left: 5px;
+}
+
+.footer-legal {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+}
+.footer-legal b {
+    color: #fff;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 30px;
+    text-align: center;
+}
+
+.footer-bottom-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-bottom-content p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.footer-bottom-content a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.footer-bottom-content a:hover {
+    color: #90EE90;
+}
+
+.copyright {
+    font-weight: 500;
+    margin-bottom: 10px !important;
+}
+
+/* Модальные окна для юридических документов */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content.legal-modal {
+    background: #fff;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 40px;
+    border-radius: 12px;
+    position: relative;
+    color: #333;
+}
+
+.legal-modal .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #267646;
+}
+
+.legal-text h3 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #267646;
+}
+
+.legal-text p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.legal-text ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.legal-text li {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 40px 20px 20px;
+        margin-top: 60px;
+    }
+    
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .modal-content.legal-modal {
+        padding: 25px;
+        max-height: 90vh;
+    }
+    
+    .footer-bottom-content p {
+        font-size: 12px;
+    }
+}
+/* ===== МОДАЛЬНЫЕ ОКНА ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Контейнер модального окна */
+.modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 35px 30px;
+    max-width: 450px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Кнопка закрытия (крестик) */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    background: #f0f0f0;
+    color: #333;
+    transform: rotate(90deg);
+}
+
+/* Заголовок модального окна */
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #267646;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* ===== ФОРМА ===== */
+#excursionForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Поля ввода */
+#excursionForm input[type="text"],
+#excursionForm input[type="tel"] {
+    padding: 14px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s;
+    background: #fafafa;
+    color: #333;
+}
+
+#excursionForm input[type="text"]:focus,
+#excursionForm input[type="tel"]:focus {
+    outline: none;
+    border-color: #267646;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(38, 118, 70, 0.1);
+}
+
+#excursionForm input::placeholder {
+    color: #aaa;
+}
+
+/* Галочка согласия */
+.form-consent label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #666;
+    user-select: none;
+}
+
+.form-consent input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: #267646;
+    flex-shrink: 0;
+}
+
+.form-consent a {
+    color: #267646;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.form-consent a:hover {
+    color: #1b5e36;
+    text-decoration: none;
+}
+
+/* Кнопка отправки */
+#excursionForm button[type="submit"] {
+    padding: 15px 24px;
+    background: linear-gradient(135deg, #267646 0%, #1b5e36 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(38, 118, 70, 0.3);
+}
+
+#excursionForm button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 118, 70, 0.4);
+}
+
+#excursionForm button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+#excursionForm button[type="submit"]:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== ОКНО УСПЕХА ===== */
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.success-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 40, 20, 0.75);
+}
+
+.success-overlay.active {
+    display: flex;
+}
+
+.success-content {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 35px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: popIn 0.5s ease;
+    z-index: 1;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-content .modal-close {
+    top: 12px;
+    right: 15px;
+}
+
+.success-icon {
+    font-size: 56px;
+    margin-bottom: 15px;
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #267646;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.success-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 28px;
+}
+
+.success-btn {
+    padding: 14px 36px;
+    background: #267646;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(38, 118, 70, 0.3);
+}
+
+.success-btn:hover {
+    background: #1b5e36;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 118, 70, 0.4);
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .modal {
+        padding: 30px 25px;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+    }
+    
+    #excursionForm input[type="text"],
+    #excursionForm input[type="tel"] {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    #excursionForm button[type="submit"] {
+        padding: 14px 20px;
+        font-size: 14px;
+    }
+    
+    .form-consent label {
+        font-size: 11px;
+    }
+    
+    .success-content {
+        padding: 35px 25px;
+    }
+    
+    .success-title {
+        font-size: 26px;
+    }
+    
+    .success-icon {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        padding: 25px 20px;
+    }
+    
+    .modal-title {
+        font-size: 22px;
+    }
+    
+    #excursionForm input[type="text"],
+    #excursionForm input[type="tel"] {
+        padding: 11px 14px;
+        font-size: 13px;
+    }
+    
+    #excursionForm button[type="submit"] {
+        padding: 13px 18px;
+        font-size: 13px;
+    }
+    
+    .success-content {
+        padding: 30px 20px;
+    }
+    
+    .success-title {
+        font-size: 24px;
+    }
+    
+    .success-text {
+        font-size: 14px;
+    }
+    
+    .success-btn {
+        padding: 12px 28px;
+        font-size: 14px;
+    }
+}
+/* === БЛОК ДОВЕРИЯ В ПОДВАЛЕ === */
+.trust-banner {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 35px 30px;
+    margin: 0 auto 35px;
+    max-width: 850px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.trust-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #fff;
+    margin: 0 0 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.trust-subtitle {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 22px;
+    font-weight: 500;
+}
+
+.trust-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.trust-list li {
+    font-size: 14px;
+    color: #e6e6e6;
+    padding-left: 26px;
+    position: relative;
+    line-height: 1.4;
+}
+
+.trust-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 1px;
+    color: #4ade80; /* Светло-зелёная галочка */
+    font-weight: 700;
+    font-size: 15px;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .trust-banner { padding: 25px 20px; margin-bottom: 25px; }
+    .trust-title { font-size: 22px; }
+    .trust-list { gap: 10px; }
+    .trust-list li { font-size: 13px; padding-left: 22px; }
+}
+/* === ПОЛОСА ПРЕИМУЩЕСТВ === */
+/* === ПОЛОСА ПРЕИМУЩЕСТВ (строго над точками) === */
+.features-strip {
+    position: absolute;       /* Жесткое позиционирование внутри hero-блока */
+    bottom: 120px;             /* 🔑 Расстояние от низа до желтых точек. Меняй ±5px под себя */
+    left: 50%;                /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Идеальное выравнивание по центру */
+    
+    width: 92%;
+    max-width: 850px;
+    
+    background: rgba(12, 28, 18, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    
+    z-index: 25;              /* Поверх фона, под видео-кружком */
+    margin: 0;                /* Убираем старые отступы */
+    box-sizing: border-box;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e0e0e0;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    white-space: nowrap; /* Текст не переносится */
+}
+
+.feature-item svg {
+    color: #4ade80; /* Светло-зелёный цвет иконок */
+    flex-shrink: 0;
+}
+
+/* Адаптивность для телефонов */
+@media (max-width: 768px) {
+    .features-strip {
+        gap: 15px;
+        padding: 12px 10px;
+        margin-bottom: 20px;
+    }
+    
+    .feature-item {
+        font-size: 12px;
+        gap: 6px;
+    }
+    
+    .feature-item svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+    <div class="overlay"></div>
+
+    <header>
+        <div class="header-left">
+    <a onclick="openExcursionModal()">Записаться на экскурсию</a>
+</div>
+
+        <div class="logo">
+            <div class="logo-text">
+                <span class="small">ЖИЛОЙ КОМПЛЕКС</span>
+                ЛЕСНОЕ ОЗЕРО
+            </div>
+        </div>
+
+        <div class="header-right">
+            <span class="phone" onclick="openPhoneModal()">+7 (995) 669-92-40</span>
+            <div class="burger" onclick="openMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="content">
+            <h1 class="main-title">Загородный поселок рядом с Пензой</h1>
+            <p class="subtitle"> Участки </p>
+            <p class="price">от 120 000 ₽/ за сотку</p>
+            <a href="details.html" class="btn-details">
+                Подробнее
+                <span>›</span>
+            </a>
+        </div>
+<!-- Полоса преимуществ (иконки + текст) -->
+<div class="features-strip">
+    <div class="feature-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>15 минут до Пензы</span>
+    </div>
+
+    <div class="feature-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-8"></path><path d="M12 6l-4 6h8z"></path><path d="M12 2l-4 6h8z"></path></svg>
+        <span>Лес и озеро рядом</span>
+    </div>
+
+    <div class="feature-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        <span>Газ, электричество, дороги</span>
+    </div>
+
+    <div class="feature-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Развитие территории и безопасность</span>
+    </div>
+</div>
+       <div class="slide-nav">
+    <div class="slide-dot active" onclick="setSlide(0)"></div>
+    <div class="slide-dot" onclick="setSlide(1)"></div>
+    <div class="slide-dot" onclick="setSlide(2)"></div>
+    <div class="slide-dot" onclick="setSlide(3)"></div>
+    
+    <!-- Кружок с видео -->
+    <!-- Видео-кружок поверх цифр -->
+<div class="video-circle-overlay" onclick="toggleVideo()">
+    <video id="overlayVideo" src="img/кружок.mp4" muted loop playsinline></video>
+    <div class="video-icon">▶</div>
+</div>
+</div>
+
+        <div class="bottom-arrows">
+    <button class="arrow-btn" onclick="openGallery()">‹</button>
+    <button class="arrow-btn" onclick="openGallery()">›</button>
+</div>
+    </main>
+
+    <!-- Модальное окно телефона -->
+    <div class="modal-overlay" id="phoneModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closePhoneModal()">×</button>
+            <h2 class="modal-title">Свяжитесь с нами</h2>
+            <p class="modal-phone">+7 (995) 669-92-40</p>
+            <div class="modal-buttons">
+                <a href="tel:+79956699240" class="modal-btn call">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z"/>
+                    </svg>
+                    Позвонить
+                </a>
+                <a href="sms:+79956699240" class="modal-btn sms">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    Написать сообщение
+                </a>
+            </div>
+        </div>
+    </div>
+<!-- Модальное окно галереи -->
+<div class="gallery-overlay" id="galleryOverlay">
+    <div class="gallery-container">
+        <button class="gallery-close" onclick="closeGallery()">×</button>
+        
+        <div class="gallery-image-wrapper">
+            <img id="galleryImage" src="" alt="Изображение участка">
+        </div>
+        
+        <button class="gallery-nav gallery-prev" onclick="prevImage()">‹</button>
+        <button class="gallery-nav gallery-next" onclick="nextImage()">›</button>
+        
+        <div class="gallery-counter">
+            <span id="galleryCounter">1</span> / 4
+        </div>
+        
+        <button class="gallery-back-btn" onclick="closeGallery()">
+            ← Вернуться к главному экрану
+        </button>
+        
+        <!-- Индикаторы -->
+        <div class="gallery-dots">
+            <div class="gallery-dot active" onclick="goToImage(0)"></div>
+            <div class="gallery-dot" onclick="goToImage(1)"></div>
+            <div class="gallery-dot" onclick="goToImage(2)"></div>
+            <div class="gallery-dot" onclick="goToImage(3)"></div>
+        </div>
+    </div>
+</div>
+    <!-- Полноэкранное меню -->
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close" onclick="closeMenu()">×</button>
+        <a onclick="closeMenu()">Главная</a>
+        <a href="details.html" onclick="closeMenu()">Участки</a>
+        <a onclick="closeMenu()">Инфраструктура</a>
+        <a onclick="closeMenu()">О проекте</a>
+         <a onclick="openPhoneModal(); closeMenu();">+7 (995) 669-92-40</a>
+    </div>
+   <!-- Модальное окно заявки -->
+<div class="modal-overlay" id="excursionModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeExcursionModal()">×</button>
+        <h2 class="modal-title">Заявка</h2>
+        
+        <form action="https://formspree.io/f/xkoywwkb" method="POST" id="excursionForm">
+            <input type="text" name="surname" placeholder="Фамилия" required>
+            <input type="text" name="firstname" placeholder="Имя" required>
+            <input type="tel" name="phone" placeholder="Телефон" required>
+            
+            <!-- Галочка согласия -->
+            <div style="margin: 15px 0;">
+                <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 12px; color: #555;">
+                    <input type="checkbox" name="consent" required style="margin-top: 2px; width: 16px; height: 16px;">
+                    <span>Я согласен на обработку <a href="#" onclick="openModal('privacyModal'); return false;" style="color: #267646;">персональных данных</a> в соответствии с 152-ФЗ</span>
+                </label>
+            </div>
+            
+            <button type="submit" style="width: 100%; padding: 12px; background: #267646; color: #fff; border: none; border-radius: 8px; cursor: pointer;">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно успеха -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeSuccessModal()">×</button>
+        <h2>Спасибо!</h2>
+        <p>Ваша заявка успешно отправлена.<br>Мы свяжемся с вами в ближайшее время.</p>
+        <button onclick="closeSuccessModal()" style="padding: 10px 24px; background: #267646; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Закрыть</button>
+    </div>
+</div>
+</div>
+
+ </div> 
+</div>
+<!-- Окно успешной отправки -->
+<div class="success-overlay" id="successModal">
+    <div class="success-content">
+        <button class="success-close" onclick="closeSuccessModal()">×</button>
+        <div class="success-icon">🌿</div>
+        <h2 class="success-title">Спасибо!</h2>
+        <p class="success-text">Заявка успешно отправлена.<br>Мы свяжемся с вами в ближайшее время.</p>
+        <button class="success-btn" onclick="closeSuccessModal()">Отлично</button>
+    </div>
+</div>
+<!-- Подвал сайта -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <!-- Основная информация -->
+        <div class="footer-section">
+            <div class="footer-logo">
+                <span>ЖИЛОЙ КОМПЛЕКС</span>
+                <b>ЛЕСНОЕ ОЗЕРО</b>
+            </div>
+            <p class="footer-desc">Посёлок «Новая Жизнь», Пензенская область</p>
+            <div class="footer-contacts">
+                <a href="tel:+79956699240" class="footer-phone">++7 (995) 669-92-40</a>
+                <a href="mailto:tcnlo@mail.ru" class="footer-email">Почта: tcnlo@mail.ru</a>
+            </div>
+        </div>
+
+        <!-- Меню -->
+        <div class="footer-section">
+            <h4 class="footer-title">Навигация</h4>
+            <ul class="footer-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="details.html">Участки</a></li>
+                
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </div>
+
+        <!-- Документы -->
+        <div class="footer-section">
+            <h4 class="footer-title">Документы</h4>
+            <ul class="footer-menu">
+                <li><a href="#privacy-policy" onclick="openModal('privacyModal')">Политика конфиденциальности</a></li>
+                <li><a href="#user-agreement" onclick="openModal('agreementModal')">Пользовательское соглашение</a></li>
+            </ul>
+        </div>
+
+        <!-- Юридическая информация -->
+        <div class="footer-section">
+            <h4 class="footer-title">Юридическая информация</h4>
+            <p class="footer-legal">
+                <b>Лесное Озеро</b><br>
+                 г. Пенза<br><br>
+                <b>Загородный проект земельных участков, домов и инвестиционных решений.
+                
+                <b>Запись на просмотр / информация:
++7 (995) 669-92-40 + max</b>
+            </p>
+        </div>
+    </div>
+<!-- Блок доверия -->
+<div class="trust-banner">
+    <h3 class="trust-title">Политика доверия</h3>
+    <p class="trust-subtitle">Мы работаем открыто и поэтапно.</p>
+    <ul class="trust-list">
+        <li>Показываем участок на месте</li>
+        <li>Объясняем реальные условия без скрытых платежей</li>
+        <li>Фиксируем договорённости документально</li>
+        <li>Помогаем подобрать формат под бюджет и задачу</li>
+        <li>Сопровождаем до результата</li>
+    </ul>
+</div>
+    <!-- Копирайт и 152-ФЗ -->
+    <div class="footer-bottom">
+        <div class="footer-bottom-content">
+            <p class="copyright">© 2024 ЖК «Лесное Озеро». Все права защищены.</p>
+            <p class="legal-notice">
+                <a href="#privacy-policy" onclick="openModal('privacyModal')">Политика обработки персональных данных</a>
+            </p>
+            <p class="personal-data-notice">
+                Информация на сайте не является публичной офертой. Условия продажи конкретных участков, домов и услуг уточняются индивидуально. Правообладатели объектов могут отличаться.
+                Сайт использует файлы cookie для улучшения работы. 
+                Продолжая использовать сайт, вы соглашаетесь с 
+                <a href="#user-agreement" onclick="openModal('agreementModal')">условиями обработки персональных данных</a> 
+                в соответствии с 152-ФЗ.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- Модальное окно: Политика конфиденциальности -->
+<div class="modal-overlay" id="privacyModal">
+    <div class="modal-content legal-modal">
+        <button class="modal-close" onclick="closeModal('privacyModal')">×</button>
+        <h2 class="modal-title">Политика конфиденциальности</h2>
+        <div class="legal-text">
+            <h3>1. Общие положения</h3>
+            <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые ЖК «Лесное Озеро» (далее – Оператор).</p>
+            
+            <h3>2. Основные понятия</h3>
+            <p><b>Персональные данные</b> – любая информация, относящаяся к прямо или косвенно определенному или определяемому физическому лицу (субъекту персональных данных).</p>
+            
+            <h3>3. Обработка персональных данных</h3>
+            <p>Оператор обрабатывает персональные данные Пользователя только в случае их заполнения и/или отправки Пользователем самостоятельно через специальные формы, расположенные на сайте. Заполняя соответствующие формы и/или отправляя свои персональные данные, Пользователь выражает свое согласие с данной Политикой.</p>
+            
+            <h3>4. Права субъекта персональных данных</h3>
+            <p>Субъект персональных данных имеет право:</p>
+            <ul>
+                <li>Получать информацию об обработке своих персональных данных</li>
+                <li>Требовать уточнения, блокирования или уничтожения своих персональных данных</li>
+                <li>Отозвать согласие на обработку персональных данных</li>
+            </ul>
+            
+            <h3>5. Контакты</h3>
+            <p>По всем вопросам, связанным с обработкой персональных данных, вы можете обратиться: <a href="mailto:privacy@lesnoe-ozero.ru">privacy@lesnoe-ozero.ru</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно: Пользовательское соглашение -->
+<div class="modal-overlay" id="agreementModal">
+    <div class="modal-content legal-modal">
+        <button class="modal-close" onclick="closeModal('agreementModal')">×</button>
+        <h2 class="modal-title">Пользовательское соглашение</h2>
+        <div class="legal-text">
+            <h3>1. Общие условия</h3>
+            <p>Настоящее Пользовательское соглашение (далее – Соглашение) регулирует отношения между ЖК «Лесное Озеро» (далее – Исполнитель) и пользователем сайта (далее – Пользователь) по поводу использования данного сайта.</p>
+            
+            <h3>2. Использование сайта</h3>
+            <p>Используя данный сайт, Пользователь выражает свое согласие с настоящим Соглашением и принимает на себя указанные в нем права и обязанности.</p>
+            
+            <h3>3. Интеллектуальная собственность</h3>
+            <p>Все материалы сайта защищены авторским правом. Любое использование материалов возможно только с письменного разрешения правообладателя.</p>
+            
+            <h3>4. Ответственность сторон</h3>
+            <p>Исполнитель не несет ответственности за точность и полноту информации, размещенной на сайте. Пользователь самостоятельно принимает решения, связанные с использованием информации сайта.</p>
+            
+            <h3>5. Заключительные положения</h3>
+            <p>Исполнитель оставляет за собой право вносить изменения в настоящее Соглашение без предварительного уведомления Пользователя.</p>
+        </div>
+    </div>
+</div>
+
+    
+    <script>
+        function openPhoneModal() {
+            document.getElementById('phoneModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhoneModal() {
+            document.getElementById('phoneModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openMenu() {
+            document.getElementById('menuOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            document.getElementById('menuOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('phoneModal').addEventListener('click', function(e) {
+            if (e.target === this) closePhoneModal();
+        });
+
+        document.getElementById('menuOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeMenu();
+        });
+
+        let currentSlide = 0;
+        const dots = document.querySelectorAll('.slide-dot');
+
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function setSlide(index) {
+            currentSlide = index;
+            updateDots();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % dots.length;
+            updateDots();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + dots.length) % dots.length;
+            updateDots();
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => setSlide(index));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePhoneModal();
+                closeMenu();
+            }
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? nextSlide() : prevSlide();
+            }
+        });
+       document.getElementById('excursionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const fd = new FormData(this);
+    const surname = fd.get('surname');
+    const name = fd.get('firstname');
+    const phone = fd.get('phone');
+
+    const botToken = '8627766134:AAEIafG18XRSibh4A7oqnSLtOqUe8qFQpwA';
+    const chatId = '1038288755';
+    
+    const text = `🔥 Новая заявка!%0A👤 ${surname} ${name}%0A📞 ${phone}`;      
+});
+document.getElementById('excursionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const fd = new FormData(this);
+    const surname = fd.get('surname');
+    const name = fd.get('firstname');
+    const phone = fd.get('phone');
+
+    const botToken = '8627766134:AAEIafG18XRSibh4A7oqnSLtOqUe8qFQpwA';
+    const chatId = '1038288755';
+    
+    const text = `🔥 Новая заявка!%0A👤 ${surname} ${name}%0A📞 ${phone}`;
+});
+document.getElementById('excursionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const fd = new FormData(this);
+    const surname = fd.get('surname');
+    const name = fd.get('firstname');
+    const phone = fd.get('phone');
+
+    const botToken = '8627766134:AAEIafG18XRSibh4A7oqnSLtOqUe8qFQpwA';
+    const chatId = '1038288755';
+    
+    const text = `🔥 Новая заявка!%0A👤 ${surname} ${name}%0A📞 ${phone}`;
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${text}`;
+    
+    fetch(url, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                alert('✅ Заявка отправлена!');
+                closeExcursionModal();
+                this.reset();
+            } else {
+                alert('Ошибка: ' + data.description);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Не удалось отправить. Попробуйте позвонить нам.');
+        });
+});
+// ===== ФУНКЦИИ ДЛЯ МОДАЛЬНЫХ ОКОН =====
+
+function openExcursionModal() {
+    const modal = document.getElementById('excursionModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeExcursionModal() {
+    const modal = document.getElementById('excursionModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function openSuccessModal() {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+}
+
+function closeSuccessModal() {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Закрытие модалок по клику на фон
+document.addEventListener('DOMContentLoaded', function() {
+    const excursionModal = document.getElementById('excursionModal');
+    const successModal = document.getElementById('successModal');
+    
+    if (excursionModal) {
+        excursionModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExcursionModal();
+            }
+        });
+    }
+    
+    if (successModal) {
+        successModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessModal();
+            }
+        });
+    }
+    
+    // ===== ОБРАБОТКА ФОРМЫ =====
+    const form = document.getElementById('excursionForm');
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Проверяем галочку согласия
+            const consentCheckbox = form.querySelector('input[name="consent"]');
+            if (!consentCheckbox || !consentCheckbox.checked) {
+                alert('✓ Пожалуйста, подтвердите согласие на обработку персональных данных');
+                return;
+            }
+            
+            // Проверяем, что action указан
+            if (!form.action || form.action === window.location.href) {
+                alert('❌ Ошибка: не настроена отправка. Укажите правильный action в форме.');
+                return;
+            }
+            
+            // Блокируем кнопку на время отправки
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправка...';
+            }
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Успешно отправлено
+                    closeExcursionModal();
+                    setTimeout(function() {
+                        openSuccessModal();
+                    }, 300);
+                    form.reset();
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    if (errorData.errors) {
+                        alert(errorData.errors.map(err => err.message).join(', '));
+                    } else {
+                        alert('❌ Ошибка при отправке. Попробуйте позже или позвоните нам.');
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка отправки:', error);
+                alert('❌ Не удалось отправить. Проверьте интернет-соединение или позвоните нам.\n\nОшибка: ' + error.message);
+            } finally {
+                // Возвращаем кнопку
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Отправить';
+                }
+            }
+        });
+    }
+});
+
+// Скрипт отправки заявки на Email через Formspree
+var form = document.getElementById('excursionForm');
+
+function handleSubmit(event) {
+    event.preventDefault();
+    var status = document.getElementById("my-form-status");
+    var data = new FormData(form);
+
+    fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            // Если всё успешно
+            alert('✅ Заявка успешно отправлена! Мы свяжемся с вами.');
+            closeExcursionModal(); // Закрываем окно
+            form.reset();          // Очищаем поля
+        } else {
+            // Если ошибка
+            response.json().then(data => {
+                if (Object.hasOwn(data, 'errors')) {
+                    alert(data["errors"].map(error => error["message"]).join(", "));
+                } else {
+                    alert(' Ошибка при отправке. Попробуйте позже.');
+                }
+            });
+        }
+    }).catch(error => {
+        alert('❌ Ошибка соединения.');
+    });
+}
+// ===== ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ =====
+
+// Массив изображений (замените пути на свои!)
+const galleryImages = [
+    'img/общ план.jpg',  // Замените на путь к вашему 1 изображению
+    'img/дорога.jpg',  // Замените на путь к вашему 2 изображению
+    'img/домk.jpg',  // Замените на путь к вашему 3 изображению
+    'img/чан.jpg'   // Замените на путь к вашему 4 изображению
+];
+
+let currentImageIndex = 0;
+
+// Открыть галерею
+function openGallery() {
+    document.getElementById('galleryOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentImageIndex = 0;
+    updateGalleryImage();
+}
+
+// Закрыть галерею
+function closeGallery() {
+    document.getElementById('galleryOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Обновить изображение
+function updateGalleryImage() {
+    const img = document.getElementById('galleryImage');
+    img.style.opacity = '0';
+    
+    setTimeout(() => {
+        img.src = galleryImages[currentImageIndex];
+        img.style.opacity = '1';
+    }, 150);
+    
+    // Обновить счетчик
+    document.getElementById('galleryCounter').textContent = currentImageIndex + 1;
+    
+    // Обновить точки
+    const dots = document.querySelectorAll('.gallery-dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentImageIndex);
+    });
+}
+
+// Следующее изображение
+function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+    updateGalleryImage();
+}
+
+// Предыдущее изображение
+function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    updateGalleryImage();
+}
+
+// Перейти к конкретному изображению
+function goToImage(index) {
+    currentImageIndex = index;
+    updateGalleryImage();
+}
+
+// Закрытие по клику на фон
+document.getElementById('galleryOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeGallery();
+    }
+});
+
+// Клавиатура
+document.addEventListener('keydown', (e) => {
+    if (document.getElementById('galleryOverlay').classList.contains('active')) {
+        if (e.key === 'Escape') closeGallery();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+    }
+});
+
+// Свайпы для мобильных
+let galleryTouchStartX = 0;
+let galleryTouchEndX = 0;
+
+document.getElementById('galleryOverlay').addEventListener('touchstart', e => {
+    galleryTouchStartX = e.changedTouches[0].screenX;
+});
+
+document.getElementById('galleryOverlay').addEventListener('touchend', e => {
+    galleryTouchEndX = e.changedTouches[0].screenX;
+    const diff = galleryTouchStartX - galleryTouchEndX;
+    if (Math.abs(diff) > 50) {
+        diff > 0 ? nextImage() : prevImage();
+    }
+});
+
+function toggleVideo() {
+    const circle = document.querySelector('.video-circle-overlay');
+    const video = document.getElementById('overlayVideo');
+    
+    if (!circle || !video) {
+        console.error('Элементы не найдены');
+        return;
+    }
+    
+    if (circle.classList.contains('active')) {
+        // Видео играет — ставим на паузу и скрываем
+        video.pause();
+        circle.classList.remove('active');
+    } else {
+        // Видео на паузе — запускаем и показываем
+        video.play();
+        circle.classList.add('active');
+    }
+}
+
+// Добавляем стили для управления видимостью (если их ещё нет в CSS)
+const style = document.createElement('style');
+style.textContent = `
+    .video-circle-overlay video {
+        display: none;
+    }
+    .video-circle-overlay.active video {
+        display: block;
+    }
+    .video-circle-overlay.active .video-icon {
+        display: none;
+    }
+    .video-icon {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 40px;
+        pointer-events: none;
+    }
+`;
+document.head.appendChild(style);
+// Открытие/закрытие модальных окон
+function openModal(modalId) {
+    event.preventDefault();
+    document.getElementById(modalId).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Закрытие по клику на фон
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+});
+    </script>
+</body>
+</html>
