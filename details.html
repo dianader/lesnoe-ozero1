@@ -448,7 +448,97 @@
     }
     .format-card.horizontal-card .format-image { height: 250px !important; }
 }
+/* Кнопка в блоках */
+.btn-call-block {
+    width: 100%;
+    padding: 14px;
+    background: #267646;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 25px;
+    box-shadow: 0 4px 12px rgba(38, 118, 70, 0.25);
+}
+.btn-call-block:hover {
+    background: #1b5e36;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(38, 118, 70, 0.35);
+}
 
+/* Модальное окно звонка */
+.call-modal-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+}
+.call-modal-overlay.active { display: flex; }
+
+.call-modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 35px 30px;
+    max-width: 400px; width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popIn 0.3s ease;
+}
+.call-icon { font-size: 48px; margin-bottom: 10px; }
+.call-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #267646; margin-bottom: 10px; }
+.call-text { font-size: 14px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+
+.call-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #267646;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+}
+.call-btn:hover { background: #1b5e36; transform: scale(1.05); }
+
+.call-close-btn {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #666;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+.call-close-btn:hover { border-color: #267646; color: #267646; }
+
+/* Крестик закрытия */
+.call-modal .modal-close {
+    position: absolute; top: 12px; right: 16px;
+    background: none; border: none;
+    font-size: 28px; cursor: pointer;
+    color: #999; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; transition: all 0.3s;
+}
+.call-modal .modal-close:hover { background: #f0f0f0; color: #333; transform: rotate(90deg); }
+
+@keyframes popIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
     </style>
 </head>
 <body>
@@ -456,13 +546,13 @@
     <!-- Шапка -->
     <header>
         <div class="logo">
-            <span>ЖИЛОЙ КОМПЛЕКС</span>
+            <span>ЗАГОРОДНЫЙ ПОСЕЛОК</span>
             <b>ЛЕСНОЕ ОЗЕРО</b>
         </div>
         <div class="nav-links">
             <a href="index.html">Главная</a>
             
-            <a href="tel:+79674424604" class="btn-call">+7 (967) 442-46-04</a>
+            <a href="tel:+79674424604" class="btn-call">+7 (995) 669-92-40</a>
         </div>
     </header>
 
@@ -500,6 +590,7 @@
                     <div class="format-for">
                         <strong>Для кого:</strong>
                         для тех, кто хочет сам выбрать проект дома, подрядчика и темп строительства.
+                        <button type="button" class="btn-call-block" onclick="openCallModal()">Подберём участок</button>
                     </div>
                 </div>
             </div>
@@ -530,6 +621,7 @@
         <div class="format-for">
             <strong>Для кого:</strong>
             для тех, кто хочет не просто землю, а понятный путь к готовому дому.
+            <button type="button" class="btn-call-block" onclick="openCallModal()">Подберём участок</button>
         </div>
     </div>
 </div>
@@ -549,6 +641,7 @@
         <div class="format-for">
             <strong>Для кого:</strong>
             для тех, кто хочет быстро получить живой загородный сценарий без ожидания большого строительства.
+            <button type="button" class="btn-call-block" onclick="openCallModal()">Подберём участок</button>
         </div>
     </div>
 </div>
@@ -578,6 +671,7 @@
         <div class="format-for">
             <strong>Для кого:</strong>
             для инвесторов, которые понимают ценность земли, инфраструктуры и локации рядом с природой.
+       <button type="button" class="btn-call-block" onclick="openCallModal()">Подберём участок</button>
         </div>
     </div>
 </div>
@@ -597,7 +691,40 @@
             <a href="index.html">← Вернуться на главную</a>
         </div>
     </div>
+<!-- Модальное окно звонка -->
+<div class="call-modal-overlay" id="callModal">
+    <div class="call-modal">
+        <button class="modal-close" onclick="closeCallModal()">×</button>
+        <div class="call-icon">📞</div>
+        <h3 class="call-title">Свяжитесь с нами</h3>
+        <p class="call-text">Позвоните, и мы подберём идеальный участок под ваши задачи</p>
+        <a href="tel:+79674424604" class="call-btn">+7 (995) 669-92-40</a>
+        <button class="call-close-btn" onclick="closeCallModal()">Закрыть</button>
+    </div>
+</div>
+        <!-- Твоя кнопка "Вернуться на главную" -->
+    </div>
 
+    <!-- ВСТАВЛЯЙ СКРИПТ СЮДА (ПЕРЕД </body>) -->
+    <script>
+        function openCallModal() {
+            document.getElementById('callModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCallModal() {
+            document.getElementById('callModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие по клику на тёмный фон
+        document.getElementById('callModal').addEventListener('click', function(e) {
+            if (e.target === this) closeCallModal();
+        });
+    </script>
+
+</body>
+</html>
 </body>
 </html>
 
