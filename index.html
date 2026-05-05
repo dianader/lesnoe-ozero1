@@ -1368,7 +1368,7 @@
 /* === ПОЛОСА ПРЕИМУЩЕСТВ (строго над точками) === */
 .features-strip {
     position: absolute;       /* Жесткое позиционирование внутри hero-блока */
-    bottom: 120px;             /* 🔑 Расстояние от низа до желтых точек. Меняй ±5px под себя */
+    bottom: 60px;             /* 🔑 Расстояние от низа до желтых точек. Меняй ±5px под себя */
     left: 50%;                /* Центрирование по горизонтали */
     transform: translateX(-50%); /* Идеальное выравнивание по центру */
     
@@ -1428,6 +1428,7 @@
         height: 16px;
     }
 }
+
     </style>
 </head>
 <body>
@@ -1442,7 +1443,7 @@
 
         <div class="logo">
             <div class="logo-text">
-                <span class="small">ЖИЛОЙ КОМПЛЕКС</span>
+                <span class="small">ЗАГОРОДНЫЙ ПОСЕЛОК </span>
                 ЛЕСНОЕ ОЗЕРО
             </div>
         </div>
@@ -1460,8 +1461,7 @@
     <main class="main">
         <div class="content">
             <h1 class="main-title">Загородный поселок рядом с Пензой</h1>
-            <p class="subtitle"> Участки </p>
-            <p class="price">от 120 000 ₽/ за сотку</p>
+            <p class="price">Подберём участок под ваш бюджет</p>
             <a href="details.html" class="btn-details">
                 Подробнее
                 <span>›</span>
@@ -1503,10 +1503,7 @@
 </div>
 </div>
 
-        <div class="bottom-arrows">
-    <button class="arrow-btn" onclick="openGallery()">‹</button>
-    <button class="arrow-btn" onclick="openGallery()">›</button>
-</div>
+        
     </main>
 
     <!-- Модальное окно телефона -->
@@ -1531,25 +1528,7 @@
             </div>
         </div>
     </div>
-<!-- Модальное окно галереи -->
-<div class="gallery-overlay" id="galleryOverlay">
-    <div class="gallery-container">
-        <button class="gallery-close" onclick="closeGallery()">×</button>
-        
-        <div class="gallery-image-wrapper">
-            <img id="galleryImage" src="" alt="Изображение участка">
-        </div>
-        
-        <button class="gallery-nav gallery-prev" onclick="prevImage()">‹</button>
-        <button class="gallery-nav gallery-next" onclick="nextImage()">›</button>
-        
-        <div class="gallery-counter">
-            <span id="galleryCounter">1</span> / 4
-        </div>
-        
-        <button class="gallery-back-btn" onclick="closeGallery()">
-            ← Вернуться к главному экрану
-        </button>
+
         
         <!-- Индикаторы -->
         <div class="gallery-dots">
@@ -1565,8 +1544,8 @@
         <button class="menu-close" onclick="closeMenu()">×</button>
         <a onclick="closeMenu()">Главная</a>
         <a href="details.html" onclick="closeMenu()">Участки</a>
-        <a onclick="closeMenu()">Инфраструктура</a>
-        <a onclick="closeMenu()">О проекте</a>
+        
+        
          <a onclick="openPhoneModal(); closeMenu();">+7 (995) 669-92-40</a>
     </div>
    <!-- Модальное окно заявки -->
@@ -1622,7 +1601,7 @@
         <!-- Основная информация -->
         <div class="footer-section">
             <div class="footer-logo">
-                <span>ЖИЛОЙ КОМПЛЕКС</span>
+                <span>ЗАГОРОДНЫЙ ПОСЕЛОК</span>
                 <b>ЛЕСНОЕ ОЗЕРО</b>
             </div>
             <p class="footer-desc">Посёлок «Новая Жизнь», Пензенская область</p>
